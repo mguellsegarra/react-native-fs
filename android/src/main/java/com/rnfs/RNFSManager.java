@@ -152,12 +152,23 @@ public class RNFSManager extends ReactContextBaseJavaModule {
   @ReactMethod
   public void writeFile(String filepath, String base64Content, ReadableMap options, Promise promise) {
     try {
-      byte[] bytes = Base64.decode(base64Content, Base64.DEFAULT);
+      Uri uri = getFileUri(filepath);
+      File file = new File(filepath);
+      if(file.exists())
+        file.delete();
 
-      OutputStream outputStream = getOutputStream(filepath, false);
-      outputStream.write(bytes);
-      outputStream.close();
+      file.createNewFile();
 
+      byte[] data = Base64.decode(base64Content, Base64.DEFAULT);
+      String text = new String(data, "UTF-8");
+
+      FileOutputStream fOut = new FileOutputStream(file);
+      OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+      myOutWriter.append(text);
+
+      myOutWriter.close();
+      fOut.flush();
+      fOut.close();
       promise.resolve(null);
     } catch (Exception ex) {
       ex.printStackTrace();
