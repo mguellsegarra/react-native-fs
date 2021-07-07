@@ -230,7 +230,11 @@ public class RNFSManager extends ReactContextBaseJavaModule {
   public void readFile(String filepath, Promise promise) {
     try {
       InputStream inputStream = getInputStream(filepath);
-      byte[] inputData = getInputStreamBytes(inputStream);
+      byte[] bytes = getInputStreamBytes(inputStream);
+
+      String text = new String(bytes, "UTF-8");
+      byte[] inputData = text.getBytes("UTF-8");
+
       String base64Content = Base64.encodeToString(inputData, Base64.NO_WRAP);
 
       promise.resolve(base64Content);
