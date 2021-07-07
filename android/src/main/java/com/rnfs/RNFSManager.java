@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.SparseArray;
 import android.media.MediaScannerConnection;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
