@@ -154,7 +154,7 @@ public class RNFSManager extends ReactContextBaseJavaModule {
   @ReactMethod
   public void writeFile(String filepath, String base64Content, ReadableMap options, Promise promise) {
     try {
-      Uri uri = getFileUri(filepath);
+      Uri uri = getFileUri(filepath, false);
       File file = new File(filepath);
       if(file.exists())
         file.delete();
